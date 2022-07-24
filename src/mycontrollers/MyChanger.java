@@ -16,12 +16,6 @@ import javax.swing.text.Document;
 
 public class MyChanger implements DocumentListener{
 
-	public JTextField tf;
-
-/*	public MyChanger(JTextField jtf){
-		tf = (JTextField) jtf;
-	}*/
-
 	public void changedUpdate(DocumentEvent e){}
 
 	public void insertUpdate(DocumentEvent de){
