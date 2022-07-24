@@ -1,7 +1,7 @@
 /**
-* Create a check generator using java swint and awt tools
+* Create a check generator using java swing and awt tools
 *
-*
+* Created on 18/07/2022
 * @author  Acxel Orozco (ADOB Apps)
  */
 
@@ -16,6 +16,10 @@ import javax.swing.SwingConstants;
 import java.awt.*;
 import java.awt.event.*;
 
+//Import our class
+import mycontrollers.MyVerifier;
+import mycontrollers.MyChanger;
+
 class CheckMake implements ActionListener {
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	Container contentPane;
@@ -23,7 +27,8 @@ class CheckMake implements ActionListener {
 	GridLayout gl1;
 	JButton button1, button2;
 	JFrame frame1;
-	JLabel jl_name, jl_total, jl_product, jl_vunt, jl_cant, jl_vtol;
+	JLabel jl_name, jl_total, jl_product;
+	JLabel jl_vunt, jl_cant, jl_vtol, jl_final;
 	JPanel jpanel_info, jpanel_control;
 	JTextField txf_name, txf_p1, txf_p2, txf_p3;
 	JTextField txf_vu1, txf_vu2, txf_vu3;
@@ -71,30 +76,71 @@ class CheckMake implements ActionListener {
 		jl_vtol = new JLabel();
 		jl_vtol.setText("Valor total");
 
+		jl_final = new JLabel();
+		jl_final.setText("Bienvenido");
+
 
 		//Buttons
 		button1 = new JButton("Total");
 		button1.setHorizontalAlignment(SwingConstants.LEFT);
+		//Set action controller in same class
 		button1.addActionListener(this);
 		button2 = new JButton("Borrar");
 		button2.addActionListener(this);
 
-		//TextFields
+		/**TextFields**/
+		//Product 1
 		txf_name = new JTextField(50);
 		txf_p1 = new JTextField(50);
 		txf_vu1 = new JTextField(10);
+		//set verification controller
+		txf_vu1.setInputVerifier(new MyVerifier());
 		txf_c1 = new JTextField(10);
+		txf_c1.setInputVerifier(new MyVerifier());
 		txf_vt1 = new JTextField(10);
+		//disable edition for this textfield
+		txf_vt1.setEditable(false);
+		//Set relate JTextFields through docs properties
+		//Set doc-change listener
+		txf_c1.getDocument().putProperty("owner", txf_c1);
+		txf_c1.getDocument().putProperty("assVal", txf_vu1);
+		txf_c1.getDocument().putProperty("assTVal", txf_vt1);
+		txf_c1.getDocument().addDocumentListener(new MyChanger());
+		//Product 2
 		txf_p2 = new JTextField(50);
 		txf_vu2 = new JTextField(10);
+		txf_vu2.setInputVerifier(new MyVerifier());
 		txf_c2 = new JTextField(10);
+		txf_c2.setInputVerifier(new MyVerifier());
 		txf_vt2 = new JTextField(10);
+		txf_vt2.setEditable(false);
+		txf_c2.getDocument().putProperty("owner", txf_c2);
+		txf_c2.getDocument().putProperty("assVal", txf_vu2);
+		txf_c2.getDocument().putProperty("assTVal", txf_vt2);
+		txf_c2.getDocument().addDocumentListener(new MyChanger());
+		//Product 3
 		txf_p3 = new JTextField(50);
 		txf_vu3 = new JTextField(10);
+		txf_vu3.setInputVerifier(new MyVerifier());
 		txf_c3 = new JTextField(10);
+		txf_c3.setInputVerifier(new MyVerifier());
 		txf_vt3 = new JTextField(10);
+		txf_vt3.setEditable(false);
+		txf_c3.getDocument().putProperty("owner", txf_c3);
+		txf_c3.getDocument().putProperty("assVal", txf_vu3);
+		txf_c3.getDocument().putProperty("assTVal", txf_vt3);
+		txf_c3.getDocument().addDocumentListener(new MyChanger());
 
-		//----Add elements to panel::jpanel_info
+		makeGraph();
+		resetAll();
+	}
+
+	/**Function to define and organize gui elements
+	 * 
+	 */
+	public void makeGraph() {
+
+		//Add elements to panel::jpanel_info
 		/**Set positions config for jl_name**/
 		gbctts.gridx = 0; //colums-position
 		gbctts.gridy = 0; //row-position
@@ -256,12 +302,21 @@ class CheckMake implements ActionListener {
 		jpanel_info.add(txf_vt3, gbctts);
 		gbctts.fill = GridBagConstraints.NONE; //restore fill config
 		
-		/**Set positions config for jl_totals**/
+		/**Set positions config for jl_totals:: Total de factura**/
 		gbctts.gridx = 2; //colums-position
 		gbctts.gridy = 5; //row-position
 		gbctts.gridwidth = 1;
 		gbctts.gridheight = 1;
 		jpanel_info.add(jl_total, gbctts);
+
+		/**Set positions config for jl_final :: Total final**/
+		gbctts.gridx = 0; //colums-position
+		gbctts.gridy = 6; //row-position
+		gbctts.gridwidth = 1;
+		gbctts.gridheight = 1;
+		gbctts.fill = GridBagConstraints.HORIZONTAL;
+		jpanel_info.add(jl_final, gbctts);
+		gbctts.fill = GridBagConstraints.NONE; //restore fill config
 
 		//Add panel to frame
 		contentPane.add(jpanel_info, BorderLayout.CENTER);
@@ -290,7 +345,30 @@ class CheckMake implements ActionListener {
 			System.out.println("Pressed button1 Sr: " + txf_name.getText());
 		}
 		else if (e.getSource() == button2){
-			System.out.println("Pressed button2");
+			System.out.println("Reset all");
+			resetAll();
 		}
 	}
+
+	/**Function to clean JTextFiels and reset JLabels
+	 * 
+	 */
+	private void resetAll(){
+		jl_total.setText("Total factura: ");
+		jl_final.setText("Bienvenido");
+		txf_name.setText("");
+		txf_p1.setText("");
+		txf_p2.setText("");
+		txf_p3.setText("");
+		txf_vu1.setText("0");
+		txf_vu2.setText("0");
+		txf_vu3.setText("0");
+		txf_c1.setText("0");
+		txf_c2.setText("0");
+		txf_c3.setText("0");
+		txf_vt1.setText("0");
+		txf_vt2.setText("0");
+		txf_vt3.setText("0");
+	}
+
 }

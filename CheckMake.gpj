@@ -18,7 +18,11 @@ s#p0doc
 s#q0test
 s#w0canvas
 !376;d
-[\012  grasp [\012   legendy 0.0\012   legendx 0.0\012   version 1\012   winflags 0\012   eheight 691\012   ewidth 683\012   iheight 440\012   iwidth 683\012   height 440\012   width 683\012   wbp 0\012   initlayout 0\012   yoffs -240.5\012   xoffs 0.0\012   scale 1.0\012   args ""\012   otherflags 139\012   shallowjar 1\012   visflags 118423807\012  ]\012  directed 1\012 ]!25;g
+[\012  grasp [\012   legendy 0.0\012   legendx 0.0\012   version 1\012   winflags 0\012   eheight 691\012   ewidth 683\012   iheight 440\012   iwidth 683\012   height 440\012   width 683\012   wbp 0\012   initlayout 0\012   yoffs -240.5\012   xoffs 0.0\012   scale 1.0\012   args ""\012   otherflags 139\012   shallowjar 1\012   visflags 118423807\012  ]\012  directed 1\012 ]!106;g
+%\011src%smycontrollers%sMyVerifier.java
+%\011src%smycontrollers%sMyChanger.java
 %\011src%scheckmake.java
-!25;f
+!106;f
+%\011src%smycontrollers%sMyVerifier.java
+%\011src%smycontrollers%sMyChanger.java
 %\011src%scheckmake.java
