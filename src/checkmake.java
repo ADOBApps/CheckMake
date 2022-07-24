@@ -18,6 +18,7 @@ import java.awt.event.*;
 
 //Import our class
 import mycontrollers.MyVerifier;
+import mycontrollers.MyEmpty;
 import mycontrollers.MyChanger;
 
 class CheckMake implements ActionListener {
@@ -91,7 +92,10 @@ class CheckMake implements ActionListener {
 		/**TextFields**/
 		//Product 1
 		txf_name = new JTextField(50);
+		//set verification controller
+		txf_name.setInputVerifier(new MyEmpty());
 		txf_p1 = new JTextField(50);
+		txf_p1.setInputVerifier(new MyEmpty());
 		txf_vu1 = new JTextField(10);
 		//set verification controller
 		txf_vu1.setInputVerifier(new MyVerifier());
@@ -108,6 +112,7 @@ class CheckMake implements ActionListener {
 		txf_c1.getDocument().addDocumentListener(new MyChanger());
 		//Product 2
 		txf_p2 = new JTextField(50);
+		txf_p2.setInputVerifier(new MyEmpty());
 		txf_vu2 = new JTextField(10);
 		txf_vu2.setInputVerifier(new MyVerifier());
 		txf_c2 = new JTextField(10);
@@ -120,6 +125,7 @@ class CheckMake implements ActionListener {
 		txf_c2.getDocument().addDocumentListener(new MyChanger());
 		//Product 3
 		txf_p3 = new JTextField(50);
+		txf_p3.setInputVerifier(new MyEmpty());
 		txf_vu3 = new JTextField(10);
 		txf_vu3.setInputVerifier(new MyVerifier());
 		txf_c3 = new JTextField(10);
@@ -343,6 +349,11 @@ class CheckMake implements ActionListener {
 		//get origin
 		if (e.getSource() == button1){
 			System.out.println("Pressed button1 Sr: " + txf_name.getText());
+			Float total = Float.parseFloat(txf_vt1.getText())+Float.parseFloat(txf_vt2.getText())+Float.parseFloat(txf_vt3.getText());
+			String myname = txf_name.getText();
+			jl_total.setText("Total factura: " + ((String) Float.toString(total)) + "COP");
+			jl_final.setText("Sr(a) " + myname + " su total a pagar es: " + ((String) Float.toString(total)) + "COP");
+
 		}
 		else if (e.getSource() == button2){
 			System.out.println("Reset all");
@@ -355,7 +366,7 @@ class CheckMake implements ActionListener {
 	 */
 	private void resetAll(){
 		jl_total.setText("Total factura: ");
-		jl_final.setText("Bienvenido");
+		jl_final.setText("Bienvenido(a)");
 		txf_name.setText("");
 		txf_p1.setText("");
 		txf_p2.setText("");
